@@ -86,8 +86,13 @@ function print(s) {
     LaplaceVar.ui.output.innerHTML += s + '\n';
 }
 
+function getBasePath() {
+    const path = window.location.pathname;
+    return `${window.location.host}${path === '/' ? '' : path}`
+}
+
 function getBaseUrl() {
-    return `${window.location.protocol}//${window.location.host}`
+    return `${window.location.protocol}//${getBasePath()}`
 }
 
 function getStreamUrl() {
@@ -190,11 +195,7 @@ function updateStatusUIJoin() {
 }
 
 function getWebsocketUrl() {
-    if (window.location.protocol === "https:") {
-        return `wss://${window.location.host}`
-    } else {
-        return `ws://${window.location.host}`
-    }
+    return `ws${window.location.protocol === 'https:' ? 's' : ''}://${getBasePath()}`
 }
 
 async function newRoom(rID) {
